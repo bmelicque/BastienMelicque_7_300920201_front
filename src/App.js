@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import Auth from "./pages/Auth";
+import Home from "./pages/Home";
+import Thread from "./pages/Thread";
 
 function App() {
 	const [data, setData] = useState([]);
@@ -12,19 +14,14 @@ function App() {
 		axios.get(`${process.env.REACT_APP_API_URL}api/posts`, {
 			headers: {Authorization: `Bearer ${token}`}
 		})
-			.then(res => {
-				console.log([...res.data.posts]);
-				console.log(data);
-				setData([...res.data.posts]);
-				console.log([...res.data.posts]);
-				console.log(data);
-			})
+			.then(res => setData([...res.data.posts]))
 			.catch(err => console.log(err))
 	}, []);
 
 	return (
 		<div className="App">
 			{!data.length && <Auth />}
+			{data.length && <Home postList={data} />}
 		</div>
 	);
 }
