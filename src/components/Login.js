@@ -21,7 +21,7 @@ const Login = () => {
                 }
             });
             document.cookie = `token=${data.token}; max-age=${maxAge}`;
-            window.location.reload();
+            window.location.reload(false);
         } catch (error) {
             errorDisplay.innerHTML = error.response.data.message;
         }

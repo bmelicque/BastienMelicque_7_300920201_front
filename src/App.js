@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
-import Thread from "./pages/Thread";
 
 function App() {
 	const [data, setData] = useState([]);
