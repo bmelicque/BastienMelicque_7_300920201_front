@@ -10,8 +10,10 @@ function App() {
 	useEffect(() => {
 		const token = document.cookie.split('=')[1];
 
-		axios.get(`${process.env.REACT_APP_API_URL}api/posts`, {
-			headers: {Authorization: `Bearer ${token}`}
+		console.log(token);
+
+		axios.get(`${process.env.REACT_APP_API_URL}api/post`, {
+			headers: { Authorization: `Bearer ${token}` }
 		})
 			.then(res => setData([...res.data.posts]))
 			.catch(err => console.log(err))

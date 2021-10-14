@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Post from '../components/Post';
+import Post from './Post';
 
 const Thread = ({ postList }) => {
     const [users, setUsers] = useState([]);
