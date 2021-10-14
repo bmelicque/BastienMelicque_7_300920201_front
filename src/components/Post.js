@@ -7,6 +7,7 @@ const Post = ({ post, author }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(post.text);
     const [text, setText] = useState(post.text);
+    const [removed, setRemoved] = useState(false);
 
     const { id, date, mediaUrl } = post;
     const userId = getCookie('userId');
@@ -33,6 +34,27 @@ const Post = ({ post, author }) => {
             console.log(error);
         }
     }
+
+    // Deletes the post from the database
+    const deletePost = async () => {
+        if (!window.confirm('Voulez-vous vraiment supprimer ce message ?'))
+            return 0;
+
+        try {
+            const token = getCookie('token');
+
+            await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/post/${id}`,
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setRemoved(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    if (removed) return null;
 
     return (
         <li className="post" key={`post-${id}`} >
@@ -75,7 +97,10 @@ const Post = ({ post, author }) => {
                             onClick={() => setIsEditing(!isEditing)}>
                             {isEditing ? 'Annuler' : 'Modifier'}
                         </button>
-                        <button className="post__delete">Supprimer</button>
+                        <button
+                            className="post__delete"
+                            onClick={deletePost}>
+                            Supprimer</button>
                     </div>
                 }
             </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { getCookie } from '../utils/functions';
 
 const NewPost = () => {
     const [text, setText] = useState('');
@@ -8,7 +9,7 @@ const NewPost = () => {
         e.preventDefault();
 
         try {
-            const token = document.cookie.split('=')[1];
+            const token = getCookie('token');
             await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/post`,
