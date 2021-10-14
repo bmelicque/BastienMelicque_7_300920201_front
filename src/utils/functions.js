@@ -33,7 +33,18 @@ exports.formatDate = (timestamp) => {
     }
 
     // Adds hours and minutes (adding a '0' if necessary)
-    formatedDate += ` à ${fullDate.getHours()}h${('0'+fullDate.getMinutes()).slice(-2)}`;
+    formatedDate += ` à ${fullDate.getHours()}h${('0' + fullDate.getMinutes()).slice(-2)}`;
 
     return formatedDate;
+}
+
+// Parses cookies to get the wanted one
+exports.getCookie = (cookieName) => {
+    const cookieList = document.cookie.split('; ')
+        .reduce((acc, cur) => {
+            acc[cur.split('=')[0]] = cur.split('=')[1];
+            return acc;
+        }, []);
+
+    return cookieList[cookieName];
 }

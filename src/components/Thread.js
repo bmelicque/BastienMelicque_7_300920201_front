@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Post from './Post';
+import { getCookie } from '../utils/functions';
 
 const Thread = ({ postList }) => {
     const [users, setUsers] = useState([]);
 
     // Fetches users (in order to associate the right username to a post)
     useEffect(() => {
-        const token = document.cookie.split('=')[1];
+        const token = getCookie('token');
 
         axios.get(`${process.env.REACT_APP_API_URL}api/user`, {
             headers: { Authorization: `Bearer ${token}` }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getCookie } from '../utils/functions';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,6 +22,8 @@ const Login = () => {
                 }
             });
             document.cookie = `token=${data.token}; max-age=${maxAge}`;
+            document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
+            getCookie();
             window.location.reload(false);
         } catch (error) {
             errorDisplay.innerHTML = error.response.data.message;

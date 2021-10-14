@@ -1,9 +1,10 @@
 import React from 'react';
-import { formatDate } from '../utils/functions';
+import { formatDate, getCookie } from '../utils/functions';
 
 const Post = ({ post, user }) => {
-    const {id, text, date, mediaUrl} = post;
-    const username = user && user.email.split('@')[0];
+    const { id, text, date, mediaUrl } = post;
+    const userId = getCookie('userId');
+    const username = user && (userId == user.id ? 'moi' : user.email.split('@')[0]);
 
     const formatedDate = formatDate(date);
 
