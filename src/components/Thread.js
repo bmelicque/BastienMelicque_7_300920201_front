@@ -24,7 +24,7 @@ const Thread = ({ postList }) => {
                 {postList.map(post =>
                     <Post
                         post={post}
-                        user={users.filter(user => user.id === post.userId)[0]}
+                        author={users.filter(user => user.id === post.userId)[0]}
                         key={`post-${post.id}`}
                     />
                 )}
