@@ -4,18 +4,28 @@ import { getCookie } from '../utils/functions';
 
 const NewPost = () => {
     const [text, setText] = useState('');
+    const [previewPicture, setPreviewPicture] = useState(null);
+    const [file, setFile] = useState(null);
+
+    const handlePicture = e => {
+        setPreviewPicture(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
+    }
 
     const sendNewPost = async e => {
-        e.preventDefault();
-
         try {
+            e.preventDefault();
+
             const token = getCookie('token');
+
+            const data = new FormData();
+            data.append('text', text);
+            if (file) data.append('image', file);
+
             await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/post`,
-                data: {
-                    text
-                },
+                data,
                 headers: { Authorization: `Bearer ${token}` }
             });
             window.location.reload(false);
@@ -30,9 +40,18 @@ const NewPost = () => {
                 cols="30" rows="10"
                 className="new-post__input"
                 placeholder="Écrivez un nouveau post..."
-                onChange={e => setText(e.target.value)}>
+                onChange={e => setText(e.target.value)}
+                value={text}>
             </textarea>
-            <button type="submit">Envoyer</button>
+            <label htmlFor="file">Joindre une image</label>
+            <input type="file"
+                name="file"
+                id="file"
+                className="new-post__file-input"
+                accept=".jpg, .jpeg, .png"
+                onChange={e => handlePicture(e)} />
+            {previewPicture && <img src={previewPicture} alt="L'image à envoyer" className="new-post__picture" />}
+            <button type="submit" disabled={!text}>Envoyer</button>
         </form>
     );
 };

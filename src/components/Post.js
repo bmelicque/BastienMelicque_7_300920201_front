@@ -72,7 +72,7 @@ const Post = ({ post, author }) => {
                     {modifiedText}
                 </textarea>
             }
-            {mediaUrl !== undefined ||
+            {mediaUrl &&
                 <img
                     src={mediaUrl}
                     className="post__image"
