@@ -20,8 +20,8 @@ const Auth = () => {
         <div className="auth">
             <nav>
                 <ul>
-                    <li onClick={handleModals} id='signup' className={signUpModal && 'nav-link--active'}>S'inscrire</li>
-                    <li onClick={handleModals} id='login' className={logInModal && 'nav-link--active'}>Se connecter</li>
+                    <li onClick={handleModals} id='signup' className={signUpModal ? 'nav-link--active' : null}>S'inscrire</li>
+                    <li onClick={handleModals} id='login' className={logInModal ? 'nav-link--active' : null}>Se connecter</li>
                 </ul>
             </nav>
             {signUpModal && <Signup />}

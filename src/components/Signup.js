@@ -1,11 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import zxcvbn from 'zxcvbn';
+import { isEmail } from 'validator';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
+    const [emailIsOk, setEmailIsOk] = useState(false);
     const [password, setPassword] = useState('');
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const [passwordIsOk, setPasswordIsOk] = useState(false);
 
-    const handleSignUp = e => {
+    useEffect(() => {
+        setPasswordStrength(zxcvbn(password, email).score);
+        setPasswordIsOk(zxcvbn(password, email).score > 1);
+    }, [password]);
 
+    useEffect(() => {
+        setEmailIsOk(isEmail(email))
+    }, [email]);
+
+    const handleSignUp = async e => {
+        e.preventDefault();
+
+        try {
+            await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
+                data: {
+                    email,
+                    password
+                }
+            });
+
+            const maxAge = 2 * 86400000; // 2 days
+            const { data } = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/auth/login`,
+                data: {
+                    email,
+                    password
+                }
+            });
+            document.cookie = `token=${data.token}; max-age=${maxAge}`;
+            document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
+            document.cookie = `role=${data.userRole}; max-age=${maxAge}`;
+            window.location.reload(false);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -30,10 +72,11 @@ const Signup = () => {
                 onChange={e => setPassword(e.target.value)}
                 value={password}
             />
-            <br />
-            <div className="error" id="password-error"></div>
+            <p>
+                Force du mot de passe : {passwordStrength}/4
+            </p>
 
-            <button type="submit">S'inscrire</button>
+            <button type="submit" disabled={!passwordIsOk || !emailIsOk}>S'inscrire</button>
         </form>
     );
 };

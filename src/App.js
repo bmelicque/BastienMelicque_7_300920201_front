@@ -11,17 +11,19 @@ function App() {
 	useEffect(() => {
 		const token = getCookie('token');
 
-		axios.get(`${process.env.REACT_APP_API_URL}api/post`, {
-			headers: { Authorization: `Bearer ${token}` }
-		})
+		if (token) {
+			axios.get(`${process.env.REACT_APP_API_URL}api/post`, {
+				headers: { Authorization: `Bearer ${token}` }
+			})
 			.then(res => setData([...res.data.posts]))
 			.catch(err => console.log(err))
+		}
 	}, []);
 
 	return (
 		<div className="App">
 			{!data.length && <Auth />}
-			{data.length && <Home postList={data} />}
+			{!!data.length && <Home postList={data} />}
 		</div>
 	);
 }
