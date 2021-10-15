@@ -2,7 +2,7 @@
 exports.formatDate = (timestamp) => {
     const fullDate = new Date(timestamp);
     const now = new Date(Date.now());
-    const elapsedDays = Math.abs(Date.now() - Date.parse(timestamp)) / 86400000;
+    const elapsedDays = Math.abs(Math.floor(Date.now()/86400000) - Math.floor(Date.parse(timestamp)/86400000));
     let formatedDate = '';
 
     // Dictionnary to convert the month's number to a string

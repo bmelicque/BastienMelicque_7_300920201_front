@@ -50,7 +50,7 @@ const NewPost = () => {
                 className="new-post__file-input"
                 accept=".jpg, .jpeg, .png"
                 onChange={e => handlePicture(e)} />
-            {previewPicture && <img src={previewPicture} alt="L'image à envoyer" className="new-post__picture" />}
+            {previewPicture && <img src={previewPicture} alt="Prévisualisation" className="new-post__picture" />}
             <button type="submit" disabled={!text}>Envoyer</button>
         </form>
     );

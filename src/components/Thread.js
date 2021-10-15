@@ -18,7 +18,7 @@ const Thread = ({ postList }) => {
     }, [])
 
 
-    return (
+    return (users.length &&
         <div className="thread" key="thread">
             <ul className="thread__list" key="thread-list">
                 {postList.map(post =>
