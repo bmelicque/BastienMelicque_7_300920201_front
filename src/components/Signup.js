@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import zxcvbn from 'zxcvbn';
 import { isEmail } from 'validator';
+import { login, signup } from '../utils/axiosServices';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -22,32 +23,9 @@ const Signup = () => {
     const handleSignUp = async e => {
         e.preventDefault();
 
-        try {
-            await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
-                data: {
-                    email,
-                    password
-                }
-            });
-
-            const maxAge = 2 * 86400000; // 2 days
-            const { data } = await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_API_URL}api/auth/login`,
-                data: {
-                    email,
-                    password
-                }
-            });
-            document.cookie = `token=${data.token}; max-age=${maxAge}`;
-            document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
-            document.cookie = `role=${data.userRole}; max-age=${maxAge}`;
-            window.location.reload(false);
-        } catch (error) {
-            console.log(error);
-        }
+        // If no error on signup, the user is logged in
+        if (!signup(email, password))
+            login(email, password);
     }
 
     return (

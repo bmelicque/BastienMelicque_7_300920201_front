@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { getCookie } from '../utils/functions';
+import { createPost } from '../utils/axiosServices';
 
 const NewPost = () => {
     const [text, setText] = useState('');
@@ -13,25 +12,9 @@ const NewPost = () => {
     }
 
     const sendNewPost = async e => {
-        try {
-            e.preventDefault();
+        e.preventDefault();
 
-            const token = getCookie('token');
-
-            const data = new FormData();
-            data.append('text', text);
-            if (file) data.append('image', file);
-
-            await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_API_URL}api/post`,
-                data,
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            window.location.reload(false);
-        } catch (error) {
-            console.log(error);
-        }
+        createPost(text, file);
     }
 
     return (

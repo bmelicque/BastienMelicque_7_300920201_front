@@ -1,11 +1,14 @@
 import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 import axios from 'axios';
 import { formatDate, getCookie } from '../utils/functions';
+import { deletePost, editPost, getComments, likePost } from '../utils/axiosServices';
 
 const Post = ({ post, author }) => {
     const { id, date, mediaUrl } = post;
     const userId = +getCookie('userId');
+    const userRole = getCookie('userRole');
+    const token = getCookie('token');
 
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(post.text);
@@ -13,70 +16,42 @@ const Post = ({ post, author }) => {
     const [removed, setRemoved] = useState(false);
     const [usersLiked, setUsersLiked] = useState(post.usersLiked ? post.usersLiked.split(' ').map(e => +e) : []);
     const [liked, setLiked] = useState(usersLiked.includes(userId));
+    const [commentList, setCommentList] = useState([]);
 
+    // Formats username and date of the post
     const username = userId == author.id ? 'moi' : author.email.split('@')[0];
     const formatedDate = formatDate(date);
 
-    const handleLike = async () => {
-        try {
-            const token = getCookie('token');
+    // On load, fetches comments
+    useEffect(async () => {
+        setCommentList(await getComments(id));
+    }, [])
 
-            const like = !liked;
+    const handleLike = () => {
+        const like = !liked;
 
-            if (like) setUsersLiked([...usersLiked, userId]);
-            else setUsersLiked(usersLiked.filter(user => user != userId));
-            setLiked(!liked);
+        if (like) setUsersLiked([...usersLiked, userId]);
+        else setUsersLiked(usersLiked.filter(user => user != userId));
+        setLiked(!liked);
 
-            await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_API_URL}api/post/${id}/like`,
-                data: {
-                    like: like
-                },
-                headers: { Authorization: `Bearer ${token}` }
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        likePost(id, like);
     }
 
     // Updates the post on the database
-    const updatePost = async () => {
-        try {
-            const token = getCookie('token');
-
-            await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/post/${id}`,
-                data: {
-                    text: modifiedText
-                },
-                headers: { Authorization: `Bearer ${token}` }
-            });
+    const handleUpdate = async () => {
+        if (!(await editPost(id, modifiedText))) {
             setText(modifiedText);
             setIsEditing(false);
-        } catch (error) {
-            console.log(error);
         }
     }
 
     // Deletes the post from the database
-    const deletePost = async () => {
+    const handleDelete = async () => {
         if (!window.confirm('Voulez-vous vraiment supprimer ce message ?'))
             return 0;
 
-        try {
-            const token = getCookie('token');
-
-            await axios({
-                method: "delete",
-                url: `${process.env.REACT_APP_API_URL}api/post/${id}`,
-                headers: { Authorization: `Bearer ${token}` }
-            });
+        if (!(await deletePost(id)))
             setRemoved(true);
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     if (removed) return null;
@@ -106,31 +81,43 @@ const Post = ({ post, author }) => {
             }
 
             <div className="post__footer">
-                <button
-                    className="post__like"
-                    className={liked && "post__like--liked"}
-                    onClick={handleLike}>
-                    Like {usersLiked.length}
-                </button>
+                <div>
+                    <button className="post__comments">
+                        Commentaires {commentList.length}
+                    </button>
+                    <button
+                        className="post__like"
+                        className={liked && "post__like--liked"}
+                        onClick={handleLike}>
+                        Like {usersLiked.length}
+                    </button>
+                </div>
                 {
                     author && (author.id == userId) &&
                     <div className="post__modify">
                         {isEditing &&
                             <button
                                 className="post__send"
-                                onClick={updatePost}>
+                                onClick={handleUpdate}>
                                 Envoyer
                             </button>
                         }
-                        <button
-                            className="post__edit"
-                            onClick={() => setIsEditing(!isEditing)}>
-                            {isEditing ? 'Annuler' : 'Modifier'}
-                        </button>
-                        <button
-                            className="post__delete"
-                            onClick={deletePost}>
-                            Supprimer</button>
+                        {
+                            (userId == author.id) &&
+                            <button
+                                className="post__edit"
+                                onClick={() => setIsEditing(!isEditing)}>
+                                {isEditing ? 'Annuler' : 'Modifier'}
+                            </button>
+                        }
+                        {
+                            (userId == author.id || userRole == 'admin') &&
+                            <button
+                                className="post__delete"
+                                onClick={handleDelete}>
+                                Supprimer
+                            </button>
+                        }
                     </div>
                 }
             </div>

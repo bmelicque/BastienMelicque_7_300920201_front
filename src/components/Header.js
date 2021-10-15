@@ -1,19 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 
 const Header = () => {
-    const logout = async (e) => {
+    const logout = e => {
         e.preventDefault();
 
-        axios.get(`${process.env.REACT_APP_API_URL}api/auth/logout`)
-        .then(() => {
-            document.cookie = 'token= ; max-age= 0';
-            document.cookie = 'userId= ; max-age= 0';
-            document.cookie = 'userRole= ; max-age= 0';
+        document.cookie = 'token= ; max-age= 0';
+        document.cookie = 'userId= ; max-age= 0';
+        document.cookie = 'userRole= ; max-age= 0';
 
-            window.location.reload(false);
-        })
-        .catch(error => console.log(error))
+        window.location.reload(false);
     }
 
     return (

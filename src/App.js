@@ -1,23 +1,14 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
-import { getCookie } from "./utils/functions";
+import { getPosts } from "./utils/axiosServices";
 
 function App() {
 	const [data, setData] = useState([]);
 
-	useEffect(() => {
-		const token = getCookie('token');
-
-		if (token) {
-			axios.get(`${process.env.REACT_APP_API_URL}api/post`, {
-				headers: { Authorization: `Bearer ${token}` }
-			})
-			.then(res => setData([...res.data.posts]))
-			.catch(err => console.log(err))
-		}
+	useEffect(async () => {
+		setData(await getPosts());
 	}, []);
 
 	return (

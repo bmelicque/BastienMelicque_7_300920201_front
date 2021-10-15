@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { login } from '../utils/axiosServices';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,23 +10,7 @@ const Login = () => {
     const handleLogIn = async e => {
         e.preventDefault();
 
-        try {
-            const maxAge = 2 * 86400000; // 2 days
-            const { data } = await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_API_URL}api/auth/login`,
-                data: {
-                    email,
-                    password
-                }
-            });
-            document.cookie = `token=${data.token}; max-age=${maxAge}`;
-            document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
-            document.cookie = `role=${data.userRole}; max-age=${maxAge}`;
-            window.location.reload(false);
-        } catch (error) {
-            errorDisplay.innerHTML = error.response.data.message;
-        }
+        errorDisplay.innerHTML = await login(email, password) || null;
     }
 
     return (
