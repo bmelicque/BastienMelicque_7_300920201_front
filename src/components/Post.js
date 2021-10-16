@@ -1,19 +1,17 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import axios from 'axios';
 import { formatDate, getCookie } from '../utils/functions';
-import { deletePost, editPost, getComments, likePost } from '../utils/axiosServices';
+import { editPost, getComments, likePost } from '../utils/axiosServices';
 
-const Post = ({ post, author }) => {
+const Post = props => {
+    const { post, author, removePost } = props;
     const { id, date, mediaUrl } = post;
     const userId = +getCookie('userId');
     const userRole = getCookie('userRole');
-    const token = getCookie('token');
 
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(post.text);
     const [text, setText] = useState(post.text);
-    const [removed, setRemoved] = useState(false);
     const [usersLiked, setUsersLiked] = useState(post.usersLiked ? post.usersLiked.split(' ').map(e => +e) : []);
     const [liked, setLiked] = useState(usersLiked.includes(userId));
     const [commentList, setCommentList] = useState([]);
@@ -44,17 +42,6 @@ const Post = ({ post, author }) => {
             setIsEditing(false);
         }
     }
-
-    // Deletes the post from the database
-    const handleDelete = async () => {
-        if (!window.confirm('Voulez-vous vraiment supprimer ce message ?'))
-            return 0;
-
-        if (!(await deletePost(id)))
-            setRemoved(true);
-    }
-
-    if (removed) return null;
 
     return (
         <li className="post" key={`post-${id}`} >
@@ -114,7 +101,10 @@ const Post = ({ post, author }) => {
                             (userId == author.id || userRole == 'admin') &&
                             <button
                                 className="post__delete"
-                                onClick={handleDelete}>
+                                onClick={() => {
+                                    if (window.confirm('Voulez-vous vraiment supprimer ce message ?'))
+                                        removePost(id);
+                                }}>
                                 Supprimer
                             </button>
                         }

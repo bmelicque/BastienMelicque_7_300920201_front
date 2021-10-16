@@ -4,7 +4,8 @@ import zxcvbn from 'zxcvbn';
 import { isEmail } from 'validator';
 import { login, signup } from '../utils/axiosServices';
 
-const Signup = () => {
+const Signup = props => {
+    const { handleLogin } = props;
     const [email, setEmail] = useState('');
     const [emailIsOk, setEmailIsOk] = useState(false);
     const [password, setPassword] = useState('');
@@ -25,7 +26,7 @@ const Signup = () => {
 
         // If no error on signup, the user is logged in
         if (!signup(email, password))
-            login(email, password);
+            handleLogin(email, password);
     }
 
     return (

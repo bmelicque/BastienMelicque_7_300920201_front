@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createPost } from '../utils/axiosServices';
 
-const NewPost = () => {
+const NewPost = props => {
+    const { addPost } = props;
     const [text, setText] = useState('');
     const [previewPicture, setPreviewPicture] = useState(null);
     const [file, setFile] = useState(null);
@@ -11,14 +11,13 @@ const NewPost = () => {
         setFile(e.target.files[0]);
     }
 
-    const sendNewPost = async e => {
-        e.preventDefault();
-
-        createPost(text, file);
-    }
-
     return (
-        <form action="" className="new-post" onSubmit={sendNewPost}>
+        <form action=""
+        className="new-post"
+        onSubmit={e => {
+            e.preventDefault();
+            addPost(text, file);
+        }}>
             <textarea name="new-post" id="new-post"
                 cols="30" rows="10"
                 className="new-post__input"

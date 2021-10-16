@@ -2,7 +2,8 @@ import { useState } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 
-const Auth = () => {
+const Auth = props => {
+    const { handleLogin } = props;
     const [signUpModal, setSignupModal] = useState(false);
     const [logInModal, setLogInModal] = useState(true);
 
@@ -24,8 +25,8 @@ const Auth = () => {
                     <li onClick={handleModals} id='login' className={logInModal ? 'nav-link--active' : null}>Se connecter</li>
                 </ul>
             </nav>
-            {signUpModal && <Signup />}
-            {logInModal && <Login />}
+            {signUpModal && <Signup handleLogin={handleLogin} />}
+            {logInModal && <Login handleLogin={handleLogin} />}
         </div>
     )
 }

@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { login } from '../utils/axiosServices';
 
-const Login = () => {
+const Login = props => {
+    const { handleLogin } = props;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const errorDisplay = document.querySelector('.error');
-
-    const handleLogIn = async e => {
+    const tryLogin = async e => {
         e.preventDefault();
-
-        errorDisplay.innerHTML = await login(email, password) || null;
+        document.querySelector('.error').innerHTML = await handleLogin(email, password);
     }
 
     return (
-        <form action="" className="form" id="signup-form" onSubmit={handleLogIn}>
+        <form action="" className="form" id="signup-form" onSubmit={tryLogin}>
             <div className="error"></div>
 
             <label htmlFor="email">Email&nbsp;:</label>

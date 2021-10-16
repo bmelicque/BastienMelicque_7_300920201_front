@@ -33,7 +33,7 @@ exports.login = async (email, password) => {
         document.cookie = `token=${token}; max-age=${maxAge}`;
         document.cookie = `userId=${userId}; max-age=${maxAge}`;
         document.cookie = `role=${userRole}; max-age=${maxAge}`;
-        window.location.reload(false);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
         console.log(error);
         return error.response.data.message
@@ -58,12 +58,12 @@ exports.createPost = async (text, file = null) => {
         data.append('text', text);
         if (file) data.append('image', file);
 
-        await axios.post(
+        const res = await axios.post(
             `${process.env.REACT_APP_API_URL}api/post`,
             data
         )
 
-        window.location.reload(false);
+        return res.data;
     } catch (error) {
         console.log(error);
     }

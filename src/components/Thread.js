@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Post from './Post';
-import { getUsersList } from '../utils/axiosServices';
+import { getUsersList, deletePost } from '../utils/axiosServices';
 
-const Thread = ({ postList }) => {
+const Thread = props => {
+    const [postList, setPostList] = useState(props.postList);
     const [users, setUsers] = useState([]);
+
+    const removePost = async (postId) => {
+        if (!(await deletePost(postId)))
+            setPostList(postList.filter(post => post.id !== postId));
+    }
+
+    // Synchronizes the post list form the props with the one in the state
+    useEffect(() => {
+        setPostList(props.postList);
+    }, [props])
 
     // Fetches users (in order to associate the right username to a post)
     useEffect(async () => {
@@ -18,6 +29,7 @@ const Thread = ({ postList }) => {
                     <Post
                         post={post}
                         author={users.filter(user => user.id === post.userId)[0]}
+                        removePost={removePost}
                         key={`post-${post.id}`}
                     />
                 )}
