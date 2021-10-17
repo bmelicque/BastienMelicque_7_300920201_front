@@ -1,39 +1,25 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import { formatDate, getCookie } from '../utils/functions';
-import { editPost, getComments, likePost } from '../utils/axiosServices';
+import { editPost, getComments } from '../utils/axiosServices';
+import LikeButton from './LikeButton';
+import CommentThread from './CommentThread';
+import MessageInfo from './MessageInfo';
+import MessageActions from './MessageActions';
 
 const Post = props => {
     const { post, author, removePost } = props;
-    const { id, date, mediaUrl } = post;
-    const userId = +getCookie('userId');
-    const userRole = getCookie('userRole');
+    const { id, date, mediaUrl, usersLiked } = post;
 
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(post.text);
     const [text, setText] = useState(post.text);
-    const [usersLiked, setUsersLiked] = useState(post.usersLiked ? post.usersLiked.split(' ').map(e => +e) : []);
-    const [liked, setLiked] = useState(usersLiked.includes(userId));
     const [commentList, setCommentList] = useState([]);
-
-    // Formats username and date of the post
-    const username = userId == author.id ? 'moi' : author.email.split('@')[0];
-    const formatedDate = formatDate(date);
+    const [commentsModal, setCommentsModal] = useState(false);
 
     // On load, fetches comments
     useEffect(async () => {
         setCommentList(await getComments(id));
-    }, [])
-
-    const handleLike = () => {
-        const like = !liked;
-
-        if (like) setUsersLiked([...usersLiked, userId]);
-        else setUsersLiked(usersLiked.filter(user => user != userId));
-        setLiked(!liked);
-
-        likePost(id, like);
-    }
+    }, []);
 
     // Updates the post on the database
     const handleUpdate = async () => {
@@ -44,11 +30,8 @@ const Post = props => {
     }
 
     return (
-        <li className="post" key={`post-${id}`} >
-            <div className="post__header">
-                <div className="post__user">{username}</div>
-                <div className="post__date">{formatedDate}</div>
-            </div>
+        <li className="post" key={`post-${id}`}>
+            <MessageInfo author={author} date={date} />
 
             {!isEditing ?
                 <p className="post__text">{text}</p>
@@ -69,48 +52,25 @@ const Post = props => {
 
             <div className="post__footer">
                 <div>
-                    <button className="post__comments">
+                    <button className="post__comments" onClick={() => setCommentsModal(!commentsModal)}>
                         Commentaires {commentList.length}
                     </button>
-                    <button
-                        className="post__like"
-                        className={liked && "post__like--liked"}
-                        onClick={handleLike}>
-                        Like {usersLiked.length}
-                    </button>
+                    <LikeButton
+                        postId={id}
+                        usersLiked={usersLiked} />
                 </div>
-                {
-                    author && (author.id == userId) &&
-                    <div className="post__modify">
-                        {isEditing &&
-                            <button
-                                className="post__send"
-                                onClick={handleUpdate}>
-                                Envoyer
-                            </button>
-                        }
-                        {
-                            (userId == author.id) &&
-                            <button
-                                className="post__edit"
-                                onClick={() => setIsEditing(!isEditing)}>
-                                {isEditing ? 'Annuler' : 'Modifier'}
-                            </button>
-                        }
-                        {
-                            (userId == author.id || userRole == 'admin') &&
-                            <button
-                                className="post__delete"
-                                onClick={() => {
-                                    if (window.confirm('Voulez-vous vraiment supprimer ce message ?'))
-                                        removePost(id);
-                                }}>
-                                Supprimer
-                            </button>
-                        }
-                    </div>
-                }
+
+                <MessageActions
+                    messageId={id}
+                    authorId={author.id}
+                    handleUpdate={handleUpdate}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    removeSelf={removePost}
+                />
             </div>
+
+            {commentsModal && <CommentThread commentList={commentList} users={props.users} postId={id} />}
         </li>
     );
 };

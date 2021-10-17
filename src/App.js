@@ -13,7 +13,8 @@ function App() {
 
 		if (!error) {
 			setIsLogged(true);
-			setData(await getPosts());
+			const posts = await getPosts();
+			setData(posts);
 		}
 
 		return error;
@@ -27,8 +28,8 @@ function App() {
 
 	return (
 		<div className="App">
-			{!isLogged && <Auth handleLogin={handleLogin} />}
-			{!!isLogged && <Home postList={data} />}
+			{(!isLogged || !data.length)&& <Auth handleLogin={handleLogin} />}
+			{!!isLogged && !!data.length && <Home postList={data} />}
 		</div>
 	);
 }

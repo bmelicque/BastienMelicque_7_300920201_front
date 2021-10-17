@@ -1,10 +1,12 @@
 @import './base/base';
 
+@import './components/info';
 @import './components/post';
-@import './components/new-post';
+@import './components/new';
 @import './components/header';
 
 @import './layouts/thread';
+@import './layouts/comment-thread';
 
 @import './pages/home';
 @import './pages/auth';

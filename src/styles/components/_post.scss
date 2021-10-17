@@ -1,18 +1,4 @@
 .post {
-    &__header {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__user {
-        font-weight: bold;
-
-        &::before {
-            content: 'par ';
-            font-weight: normal;
-        }
-    }
-
     &__textarea {
         width: 100%;
     }

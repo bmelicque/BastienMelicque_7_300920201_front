@@ -115,6 +115,20 @@ exports.deletePost = async (postId) => {
     }
 }
 
+// Creates a new post and sends it to the database
+exports.createComment = async (postId, text) => {
+    try {
+        const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}api/comment/${postId}`,
+            { text }
+        )
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Gets all the comments of a post
 exports.getComments = async (postId) => {
     try {
@@ -123,5 +137,28 @@ exports.getComments = async (postId) => {
     } catch (error) {
         console.log(error);
         return 0;
+    }
+}
+
+// Handles modifications of a comment
+exports.editComment = async (commentId, text) => {
+    try {
+        await axios.put(
+            `${process.env.REACT_APP_API_URL}api/comment/${commentId}`,
+            { text }
+        )
+        return 0;
+    } catch (error) {
+        return error;
+    }
+}
+
+// Handles deletion of a comment
+exports.deleteComment = async (commentId) => {
+    try {
+        await axios.delete(`${process.env.REACT_APP_API_URL}api/comment/${commentId}`)
+        return 0;
+    } catch (error) {
+        return error;
     }
 }

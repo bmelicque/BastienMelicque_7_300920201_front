@@ -29,6 +29,7 @@ const Thread = props => {
                     <Post
                         post={post}
                         author={users.filter(user => user.id === post.userId)[0]}
+                        users={users}
                         removePost={removePost}
                         key={`post-${post.id}`}
                     />

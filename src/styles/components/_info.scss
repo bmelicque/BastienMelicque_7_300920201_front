@@ -1,0 +1,14 @@
+// Informations about posts and comments (author, date...)
+.info {
+    display: flex;
+    justify-content: space-between;
+
+    &__author {
+        font-weight: bold;
+
+        &::before {
+            content: "par ";
+            font-weight: normal;
+        }
+    }
+}
