@@ -19,7 +19,7 @@ const NewPost = props => {
             addPost(text, file);
         }}>
             <textarea name="new-post" id="new-post"
-                cols="30" rows="10"
+                rows="10"
                 className="new__input"
                 placeholder="Écrivez un nouveau post..."
                 onChange={e => setText(e.target.value)}

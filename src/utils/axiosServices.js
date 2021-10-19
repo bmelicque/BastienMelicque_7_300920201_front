@@ -51,6 +51,29 @@ exports.getUsersList = async () => {
     }
 }
 
+exports.updatePassword = async (password, newPassword) => {
+    try {
+        await axios.put(
+            `${process.env.REACT_APP_API_URL}api/user`,
+            { password, newPassword }
+        )
+        return;
+    } catch (error) {
+        throw error.response.data.message;
+    }
+}
+
+exports.deleteAccount = async password => {
+    try {
+        await axios.delete(
+            `${process.env.REACT_APP_API_URL}api/user`,
+            { data: { password } }
+        )
+    } catch (error) {
+        throw error.response.data.message;
+    }
+}
+
 // Creates a new post and sends it to the database
 exports.createPost = async (text, file = null) => {
     try {

@@ -20,6 +20,15 @@ function App() {
 		return error;
 	}
 
+	const handleLogout = () => {
+		document.cookie = 'token= ; max-age= 0';
+        document.cookie = 'userId= ; max-age= 0';
+        document.cookie = 'userRole= ; max-age= 0';
+
+		setIsLogged(false);
+		setData([]);
+	}
+
 	useEffect(async () => {
 		const posts = await getPosts();
 		setData(posts);
@@ -29,7 +38,7 @@ function App() {
 	return (
 		<div className="App">
 			{(!isLogged || !data.length)&& <Auth handleLogin={handleLogin} />}
-			{!!isLogged && !!data.length && <Home postList={data} />}
+			{!!isLogged && !!data.length && <Home postList={data} handleLogout={handleLogout} />}
 		</div>
 	);
 }

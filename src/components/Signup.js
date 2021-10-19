@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import zxcvbn from 'zxcvbn';
 import { isEmail } from 'validator';
-import { login, signup } from '../utils/axiosServices';
+import { signup } from '../utils/axiosServices';
 
 const Signup = props => {
     const { handleLogin } = props;
@@ -25,8 +24,8 @@ const Signup = props => {
         e.preventDefault();
 
         // If no error on signup, the user is logged in
-        if (!signup(email, password))
-            handleLogin(email, password);
+        if (!(await signup(email, password)))
+            await handleLogin(email, password);
     }
 
     return (

@@ -1,4 +1,17 @@
 .header {
     display: flex;
     justify-content: space-between;
+
+    &__home {
+        height: 4rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__logo {
+        width: 15em;
+        overflow: hidden;
+        object-fit: cover;
+    }
 }
