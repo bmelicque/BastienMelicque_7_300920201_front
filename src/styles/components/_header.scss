@@ -1,17 +1,29 @@
 .header {
     display: flex;
     justify-content: space-between;
-
-    &__home {
-        height: 4rem;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
+    align-items: center;
 
     &__logo {
         width: 15em;
         overflow: hidden;
         object-fit: cover;
+    }
+
+    &__nav {
+        display: flex;
+        gap: 1rem;
+    }
+
+    &__navlink {
+        display: block;
+        padding: 1rem .5rem;
+
+        &--active {
+            color: $color-primary;
+        }
+
+        .fas {
+            font-size: 1.2em;
+        }
     }
 }

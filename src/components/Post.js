@@ -37,7 +37,7 @@ const Post = props => {
                 <p className="post__text">{text}</p>
                 : <textarea
                     name="" id=""
-                    className="post__textarea"
+                    className="post__text post__text--edit"
                     onChange={e => setModifiedText(e.target.value)}>
                     {modifiedText}
                 </textarea>
@@ -53,7 +53,7 @@ const Post = props => {
             <div className="post__footer">
                 <div>
                     <button className="post__comments" onClick={() => setCommentsModal(!commentsModal)}>
-                        Commentaires {commentList.length}
+                        <i class="far fa-comment-alt"></i> {commentList.length}
                     </button>
                     <LikeButton
                         postId={id}

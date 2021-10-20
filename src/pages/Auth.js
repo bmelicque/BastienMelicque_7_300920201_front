@@ -4,29 +4,22 @@ import Signup from "../components/Signup";
 
 const Auth = props => {
     const { handleLogin } = props;
-    const [signUpModal, setSignupModal] = useState(false);
-    const [logInModal, setLogInModal] = useState(true);
-
-    const handleModals = e => {
-        if (e.target.id === 'signup') {
-            setSignupModal(true);
-            setLogInModal(false);
-        } else if (e.target.id === 'login') {
-            setLogInModal(true);
-            setSignupModal(false);
-        }
-    }
+    const [signUpModal, setSignupModal] = useState(false); // User lands on 'Login' by default
 
     return (
         <div className="auth">
-            <nav>
-                <ul>
-                    <li onClick={handleModals} id='signup' className={signUpModal ? 'nav-link--active' : null}>S'inscrire</li>
-                    <li onClick={handleModals} id='login' className={logInModal ? 'nav-link--active' : null}>Se connecter</li>
-                </ul>
-            </nav>
-            {signUpModal && <Signup handleLogin={handleLogin} />}
-            {logInModal && <Login handleLogin={handleLogin} />}
+            {signUpModal ?
+                <Signup handleLogin={handleLogin} /> :
+                <Login handleLogin={handleLogin} />}
+
+            <a href="/"
+                className="auth__change-link"
+                onClick={e => {
+                    e.preventDefault();
+                    setSignupModal(!signUpModal);
+                }}>
+                {signUpModal ? 'Se connecter' : "S'inscrire"}
+            </a>
         </div>
     )
 }

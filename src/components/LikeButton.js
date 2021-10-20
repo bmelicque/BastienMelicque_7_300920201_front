@@ -24,7 +24,11 @@ const LikeButton = props => {
             className="post__like"
             className={liked ? "post__like--liked" : null}
             onClick={handleLike}>
-            Like {usersLiked.length}
+                {liked ?
+                    <i class="fas fa-heart"></i> :
+                    <i class="far fa-heart"></i>
+                }
+             {usersLiked.length}
         </button>
     );
 };

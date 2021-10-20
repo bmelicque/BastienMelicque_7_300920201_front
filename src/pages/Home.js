@@ -19,6 +19,7 @@ const Home = props => {
         <div className="homepage">
             <Header
                 handleLogout={props.handleLogout}
+                profileModal={profileModal}
                 setProfileModal={setProfileModal}
             />
             {profileModal ?

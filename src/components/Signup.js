@@ -8,17 +8,21 @@ const Signup = props => {
     const [email, setEmail] = useState('');
     const [emailIsOk, setEmailIsOk] = useState(false);
     const [password, setPassword] = useState('');
-    const [passwordStrength, setPasswordStrength] = useState(0);
     const [passwordIsOk, setPasswordIsOk] = useState(false);
-
-    useEffect(() => {
-        setPasswordStrength(zxcvbn(password, email).score);
-        setPasswordIsOk(zxcvbn(password, email).score > 1);
-    }, [password]);
+    const [passwordRepeat, setPasswordRepeat] = useState('');
+    const [passwordRepeatIsOk, setPasswordRepeatIsOk] = useState(false);
 
     useEffect(() => {
         setEmailIsOk(isEmail(email))
     }, [email]);
+
+    useEffect(() => {
+        setPasswordIsOk(zxcvbn(password, email).score > 1);
+    }, [password]);
+
+    useEffect(() => {
+        setPasswordRepeatIsOk(password === passwordRepeat);
+    }, [password, passwordRepeat]);
 
     const handleSignUp = async e => {
         e.preventDefault();
@@ -38,9 +42,10 @@ const Signup = props => {
                 onChange={e => setEmail(e.target.value)}
                 value={email}
             />
-            <br />
-            <div className="error" id="email-error"></div>
-            <br />
+            {emailIsOk !== false ?
+                <><br /><br /></> :
+                <p className="error">Veuillez saisir une adresse email valide</p>
+            }
 
             <label htmlFor="password">Mot de passe&nbsp;:</label>
             <input
@@ -50,11 +55,25 @@ const Signup = props => {
                 onChange={e => setPassword(e.target.value)}
                 value={password}
             />
-            <p>
-                Force du mot de passe : {passwordStrength}/4
-            </p>
+            {passwordIsOk !== false ?
+                <><br /><br /></> :
+                <p className="error">Ce mot de passe est trop faible</p>
+            }
 
-            <button type="submit" disabled={!passwordIsOk || !emailIsOk}>S'inscrire</button>
+            <label htmlFor="passwordRepeat">Réécrire le mot de passe&nbsp;:</label>
+            <input
+                type="password"
+                name="passwordRepeat"
+                id="passwordRepeat"
+                onChange={e => setPasswordRepeat(e.target.value)}
+                value={passwordRepeat}
+            />
+            {passwordRepeatIsOk !== false ?
+                <><br /><br /></> :
+                <p className="error">Ce mot de passe n'est pas identique au précédent</p>
+            }
+
+            <button type="submit" disabled={!passwordIsOk || !emailIsOk || !passwordRepeatIsOk}>S'inscrire</button>
         </form>
     );
 };

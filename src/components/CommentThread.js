@@ -22,9 +22,6 @@ const CommentThread = props => {
         setCommentList(props.commentList);
     }, [props]);
 
-    console.log(commentList);
-
-
     return (
         <div className="comment-thread">
             <NewComment postId={postId} addComment={addComment} />

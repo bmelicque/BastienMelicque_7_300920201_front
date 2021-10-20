@@ -19,7 +19,7 @@ const MessageActions = props => {
                 <button
                     className="post__send"
                     onClick={handleUpdate}>
-                    Envoyer
+                    <i class="fas fa-paper-plane"></i> Envoyer
                 </button>
             }
             {
@@ -27,7 +27,14 @@ const MessageActions = props => {
                 <button
                     className="post__edit"
                     onClick={() => setIsEditing(!editionModal)}>
-                    {editionModal ? 'Annuler' : 'Modifier'}
+                    {editionModal ?
+                        <>
+                            <i class="fas fa-undo"></i> Annuler
+                        </> :
+                        <>
+                            <i class="fas fa-edit"></i> Modifier
+                        </>
+                    }
                 </button>
             }
             {
@@ -38,6 +45,7 @@ const MessageActions = props => {
                         if (window.confirm('Voulez-vous vraiment supprimer ce message ?'))
                             removeSelf(messageId);
                     }}>
+                    <i class="fas fa-trash-alt"></i>
                     Supprimer
                 </button>
             }
