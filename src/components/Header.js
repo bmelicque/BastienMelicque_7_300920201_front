@@ -12,9 +12,11 @@ const Header = props => {
                     className={`header__navlink ${!profileModal && 'header__navlink--active'}`}
                     onClick={e => {
                         e.preventDefault();
+                        window.scrollTo(0, 0);
                         setProfileModal(false);
                     }}>
-                    <i class="fas fa-home"></i> Accueil
+                    <i class="fas fa-home"></i>
+                    <span> Accueil</span>
                 </a>
                 <a href="./"
                     className={`header__navlink ${profileModal && 'header__navlink--active'}`}
@@ -22,7 +24,8 @@ const Header = props => {
                         e.preventDefault();
                         setProfileModal(true);
                     }}>
-                    <i class="fas fa-user"></i> Profil
+                    <i class="fas fa-user"></i>
+                    <span> Profil</span>
                 </a>
                 <a href="./"
                     className="header__navlink"
@@ -30,7 +33,8 @@ const Header = props => {
                         e.preventDefault();
                         handleLogout();
                     }}>
-                    <i class="fas fa-sign-out-alt"></i> Se déconnecter
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span> Déconnexion</span>
                 </a>
             </nav>
         </header>

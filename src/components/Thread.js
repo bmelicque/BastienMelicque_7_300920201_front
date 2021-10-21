@@ -22,7 +22,7 @@ const Thread = props => {
     }, [])
 
 
-    return (users.length &&
+    return (!!users.length &&
         <div className="thread" key="thread">
             <ul className="thread__list" key="thread-list">
                 {postList.map(post =>
@@ -35,6 +35,7 @@ const Thread = props => {
                     />
                 )}
             </ul>
+            <p className="thread__end-msg">C'est déjà la fin !</p>
         </div>
     );
 };

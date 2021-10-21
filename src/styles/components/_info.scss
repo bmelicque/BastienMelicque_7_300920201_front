@@ -2,6 +2,7 @@
 .info {
     display: flex;
     justify-content: space-between;
+    color: $grey;
 
     &__author {
         font-weight: bold;

@@ -1,12 +1,35 @@
 .header {
+    width: 100%;
+    max-width: 991px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    //align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 1rem;
+    box-sizing: border-box;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+        background-color: white;
+        //box-shadow: $shadow;
+        border-bottom: 1px solid $color-border;
+    }
 
     &__logo {
         width: 15em;
         overflow: hidden;
         object-fit: cover;
+        flex-shrink: 0;
     }
 
     &__nav {
@@ -15,8 +38,12 @@
     }
 
     &__navlink {
-        display: block;
-        padding: 1rem .5rem;
+        display: flex;
+        padding: 1rem 0.5rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: $grey;
 
         &--active {
             color: $color-primary;
@@ -25,5 +52,29 @@
         .fas {
             font-size: 1.2em;
         }
+
+        &:hover {
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 0;
+                border-top: 4px solid;
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            width: 2rem;
+
+            span {
+                display: none;
+            }
+        }
+    }
+
+    & + form {
+        margin-top: 6rem;
     }
 }

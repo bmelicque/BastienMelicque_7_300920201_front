@@ -25,16 +25,18 @@ const CommentThread = props => {
     return (
         <div className="comment-thread">
             <NewComment postId={postId} addComment={addComment} />
-            <ul>
-                {commentList.map(comment =>
-                    <Comment
-                    key={`comment-${comment.id}`}
-                        comment={comment}
-                        author={props.users.filter(user => user.id === comment.userId)[0]}
-                        removeComment={removeComment}
-                    />
-                )}
-            </ul>
+            {!!commentList.length &&
+                <ul>
+                    {commentList.map(comment =>
+                        <Comment
+                            key={`comment-${comment.id}`}
+                            comment={comment}
+                            author={props.users.filter(user => user.id === comment.userId)[0]}
+                            removeComment={removeComment}
+                        />
+                    )}
+                </ul>
+            }
         </div>
     );
 };

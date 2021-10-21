@@ -5,7 +5,7 @@ import PasswordForm from './PasswordForm';
 const Profile = props => {
 
     return (
-        <div>
+        <div className="profile">
             <h1>Votre profil</h1>
             <PasswordForm />
             <DeleteAccountForm

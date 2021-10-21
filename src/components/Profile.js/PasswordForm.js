@@ -32,37 +32,37 @@ const PasswordForm = () => {
 
     return (
         <form action=""
-                className="change-password"
-                onSubmit={e => handleFormSubmit(e)} >
-                    
-                <h2>Modifier votre mot de passe</h2>
+            className="form"
+            onSubmit={e => handleFormSubmit(e)} >
 
+            <h2>Modifier votre mot de passe</h2>
+
+            {!!ResultMessage &&
                 <p>{ResultMessage}</p>
+            }
 
-                <label htmlFor="current">Mot de passe actuel</label>
-                <input type="password"
-                    name="current" id="current"
-                    onChange={e => setCurrentPassword(e.target.value)}
-                    value={currentPassword} />
-                <br />
+            <label htmlFor="current">Mot de passe actuel&nbsp;:</label>
+            <input type="password"
+                name="current" id="current"
+                onChange={e => setCurrentPassword(e.target.value)}
+                value={currentPassword} />
 
-                <label htmlFor="new">Nouveau mot de passe</label>
-                <input type="password"
-                    name="new" id="new"
-                    onChange={e => setNewPassword(e.target.value)}
-                    value={newPassword} />
-                <span>Force du mot de passe : {newPasswordStrength}/4</span>
-                <br />
+            <label htmlFor="new">Nouveau mot de passe&nbsp;:</label>
+            <input type="password"
+                name="new" id="new"
+                onChange={e => setNewPassword(e.target.value)}
+                value={newPassword} />
 
-                <label htmlFor="repeat">Réécrire le nouveau mot de passe</label>
-                <input type="password"
-                    name="repeat" id="repeat"
-                    onChange={e => setRepeatPassword(e.target.value)}
-                    value={repeatPassword} />
-                <br />
-                
-                <button type="submit" disabled={!newPasswordIsOk} >Envoyer</button>
-            </form>
+            <label htmlFor="repeat">Réécrire le nouveau mot de passe&nbsp;:</label>
+            <input type="password"
+                name="repeat" id="repeat"
+                onChange={e => setRepeatPassword(e.target.value)}
+                value={repeatPassword} />
+
+            <button type="submit" className="btn btn--centered" disabled={!newPasswordIsOk} >
+                <i class="fas fa-paper-plane"></i> Envoyer
+            </button>
+        </form>
     );
 };
 

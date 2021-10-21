@@ -13,35 +13,57 @@ const NewPost = props => {
 
     return (
         <form action=""
-            className="new"
-            onSubmit={e => {
+            className="form form--post"
+            onSubmit={async e => {
                 e.preventDefault();
-                addPost(text, file);
+                await addPost(text, file);
+                setText('');
+                setPreviewPicture(null);
+                setFile(null);
             }}>
+
+            <h1
+                className="form__title" >
+                Quoi de neuf ?
+            </h1>
+
             <textarea name="new-post" id="new-post"
-                rows="10"
-                className="new__input"
-                placeholder="Quoi de neuf ?"
+                rows="2"
+                className="form__input"
+                placeholder="Racontez-le ici..."
                 onChange={e => setText(e.target.value)}
                 value={text}>
             </textarea>
-            <label htmlFor="file"
-                className="form__label--file"
-                tabindex="0" >
-                <i class="fas fa-paperclip"></i>
-                Joindre une image
-            </label>
-            <input type="file"
-                name="file"
-                id="file"
-                className="new__file-input"
-                accept=".jpg, .jpeg, .png"
-                onChange={e => handlePicture(e)} />
             {previewPicture && <img src={previewPicture} alt="Prévisualisation" className="new__picture" />}
-            <button type="submit" disabled={!text}>
-                <i class="fas fa-paper-plane"></i>
-                Envoyer
-            </button>
+            <div className="form__row">
+                {file ?
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setPreviewPicture(null);
+                            setFile(null);
+                        }} >
+                        <i class="fas fa-trash-alt"></i> Supprimer l'image
+                    </button>
+                    : <>
+                        <label htmlFor="file"
+                            className="btn"
+                            tabindex="0" >
+                            <i class="fas fa-paperclip"></i>  Joindre une image
+                        </label>
+                        <input type="file"
+                            name="file"
+                            id="file"
+                            className="form__file-input"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={e => handlePicture(e)} />
+                    </>
+                }
+
+                <button type="submit" className="btn btn--red" disabled={!text}>
+                    <i class="fas fa-paper-plane"></i>  Envoyer
+                </button>
+            </div>
         </form>
     );
 };

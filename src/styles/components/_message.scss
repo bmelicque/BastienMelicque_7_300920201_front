@@ -1,0 +1,55 @@
+.message {
+    display: flex;
+    flex-direction: column;
+
+    &--post {
+        //box-shadow: $shadow;
+        border: 1px solid $color-border;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        background-color: white;
+    }
+
+    &__text {
+        padding: 0 1rem;
+
+        &--comment {
+            margin: 0;
+
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+
+    &__image {
+        margin: 0 1rem 1rem;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            padding: 0.4rem;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+
+            &:hover {
+                background-color: $color-background;
+                border: 1px solid $color-secondary;
+            }
+        }
+    }
+
+    &__like {
+        &--liked {
+            color: $color-primary;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -7,20 +7,20 @@ const NewComment = props => {
 
     return (
         <form action=""
-            className="new new--comment"
+            className="form form--comment"
             onSubmit={e => {
                 e.preventDefault();
                 addComment(postId, text);
                 setText('');
             }}>
             <textarea name="new-comment" id="new-comment"
-                cols="30" rows="2"
-                className="new__input"
+                rows="1"
+                className="form__input form__input--comment"
                 placeholder="Répondre..."
                 onChange={e => setText(e.target.value)}
                 value={text}>
             </textarea>
-            <button type="submit" disabled={!text}>
+            <button type="submit" className="btn btn--red" disabled={!text}>
                 <i class="fas fa-paper-plane"></i> Envoyer
             </button>
         </form>

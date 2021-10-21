@@ -1,16 +1,70 @@
 .form {
-    width: 100%;
-    max-width: 576px;
-    padding: 2rem;
+    //box-shadow: $shadow;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &--post {
+        border: 1px solid $color-border;
+        background-color: white;
+    }
+
+    &--comment {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        flex-direction: row;
+        align-self: stretch;
+    }
+
+    &__title {
+        margin: 0;
+        margin-left: 2rem;
+    }
+
+    &__row {
+        display: flex;
+        gap: 0.5rem;
+
+        & > * {
+            flex: 1 10rem;
+            text-align: center;
+        }
+    }
 
     &__label {
         &--file {
             cursor: pointer;
+            background-color: $grey;
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            &:hover {
+                background-color: lighten($grey, 10%);
+            }
         }
     }
 
+    &__text {
+        margin: 1rem 0;
+    }
+
+    textarea {
+        border: 1px solid grey;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        font-size: 1em;
+    }
+
     &__input {
-        width: 100%;
         border: 1px solid black;
         border-radius: 2px;
 
@@ -20,5 +74,13 @@
             border-radius: 2px;
             outline: none;
         }
+
+        &--comment {
+            flex: 1;
+        }
+    }
+
+    &__file-input {
+        display: none;
     }
 }

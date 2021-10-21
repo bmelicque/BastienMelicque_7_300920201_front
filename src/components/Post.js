@@ -30,14 +30,14 @@ const Post = props => {
     }
 
     return (
-        <li className="post" key={`post-${id}`}>
+        <li className="message message--post" key={`post-${id}`}>
             <MessageInfo author={author} date={date} />
 
             {!isEditing ?
-                <p className="post__text">{text}</p>
+                <p className="message__text">{text}</p>
                 : <textarea
                     name="" id=""
-                    className="post__text post__text--edit"
+                    className="message__text message__text--edit"
                     onChange={e => setModifiedText(e.target.value)}>
                     {modifiedText}
                 </textarea>
@@ -45,14 +45,14 @@ const Post = props => {
             {mediaUrl &&
                 <img
                     src={mediaUrl}
-                    className="post__image"
+                    className="message__image"
                     alt=""
                 />
             }
 
-            <div className="post__footer">
+            <div className="message__footer">
                 <div>
-                    <button className="post__comments" onClick={() => setCommentsModal(!commentsModal)}>
+                    <button className="message__comment-list" onClick={() => setCommentsModal(!commentsModal)}>
                         <i class="far fa-comment-alt"></i> {commentList.length}
                     </button>
                     <LikeButton

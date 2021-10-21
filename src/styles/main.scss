@@ -3,14 +3,16 @@
 @import './base/typography';
 @import './base/base';
 
+@import './components/btn';
+@import './components/like-btn';
 @import './components/info';
-@import './components/post';
-@import './components/new';
+@import './components/message';
 @import './components/header';
 
 @import './layouts/thread';
 @import './layouts/comment-thread';
 @import './layouts/form';
 
+@import './pages/profile';
 @import './pages/home';
 @import './pages/auth';

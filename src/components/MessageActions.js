@@ -6,7 +6,7 @@ const MessageActions = props => {
     const { messageId, authorId, handleUpdate, isEditing, setIsEditing, removeSelf } = props;
     const [editionModal, setEditionModal] = useState(isEditing);
     const userId = +getCookie('userId');
-    const userRole = getCookie('userRole');
+    const userRole = getCookie('role');
 
     useEffect(() => {
         setEditionModal(isEditing)
@@ -45,8 +45,7 @@ const MessageActions = props => {
                         if (window.confirm('Voulez-vous vraiment supprimer ce message ?'))
                             removeSelf(messageId);
                     }}>
-                    <i class="fas fa-trash-alt"></i>
-                    Supprimer
+                    <i class="fas fa-trash-alt"></i> Supprimer
                 </button>
             }
         </div>

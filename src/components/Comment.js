@@ -1,11 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { editComment } from '../utils/axiosServices';
+import { getCookie } from '../utils/functions';
 import MessageActions from './MessageActions';
-import MessageInfo from './MessageInfo';
 
 const Comment = props => {
     const { comment, author, removeComment } = props;
+    const userId = +getCookie("userId");
+    const username = userId == author.id ? 'moi' : author.email.split('@')[0];
 
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(comment.text)
@@ -25,24 +27,23 @@ const Comment = props => {
     }
 
     return (
-        <li className="comment">
-            <MessageInfo
-                author={author}
-                date={comment.date}
-            />
+        <li className="message">
 
             {!isEditing ?
-                <p className="comment__text">{text}</p>
-                : <textarea
+                <p className="message__text--comment">
+                    <span>{username}&nbsp;: </span>
+                    {text}
+                </p> :
+                <textarea
                     name="" id=""
-                    className="comment__textarea"
+                    className="message__text message__text--comment message__text--edit"
                     onChange={e => setModifiedText(e.target.value)}>
                     {modifiedText}
                 </textarea>
             }
 
-            <div className="comment__footer">
-                <MessageActions 
+            <div className="message__footer message__actions">
+                <MessageActions
                     messageId={comment.id}
                     authorId={author.id}
                     handleUpdate={handleUpdate}
