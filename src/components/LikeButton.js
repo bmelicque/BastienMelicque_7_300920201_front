@@ -13,7 +13,7 @@ const LikeButton = props => {
         const like = !liked;
 
         if (like) setUsersLiked([...usersLiked, userId]);
-        else setUsersLiked(usersLiked.filter(user => user != userId));
+        else setUsersLiked(usersLiked.filter(user => user !== userId));
         setLiked(!liked);
 
         likePost(postId, like);
@@ -24,8 +24,8 @@ const LikeButton = props => {
             className={`like-btn ${liked && "like-btn--liked"}`}
             onClick={handleLike}>
                 {liked ?
-                    <i class="fas fa-heart"></i> :
-                    <i class="far fa-heart"></i>
+                    <i className="fas fa-heart"></i> :
+                    <i className="far fa-heart"></i>
                 }
              {`  ${usersLiked.length}`}
         </button>

@@ -11,7 +11,7 @@ const Login = props => {
     }
 
     return (
-        <form action="" className="form" id="signup-form" onSubmit={tryLogin}>
+        <form action="" className="form form--auth" id="signup-form" onSubmit={tryLogin}>
             <div className="error"></div>
 
             <label htmlFor="email">Email&nbsp;:</label>
@@ -22,6 +22,7 @@ const Login = props => {
                 onChange={e => setEmail(e.target.value)}
                 value={email}
             />
+            <br />
 
             <label htmlFor="password">Mot de passe&nbsp;:</label>
             <input
@@ -31,8 +32,13 @@ const Login = props => {
                 onChange={e => setPassword(e.target.value)}
                 value={password}
             />
+            <br />
 
-            <button type="submit">Se connecter</button>
+            <button type="submit"
+                className='btn btn--red btn--centered'
+                disabled={!email || !password}>
+                Se connecter
+            </button>
         </form>
     );
 };

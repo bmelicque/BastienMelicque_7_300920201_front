@@ -10,7 +10,7 @@ const MessageActions = props => {
 
     useEffect(() => {
         setEditionModal(isEditing)
-    }, [props]);
+    }, [isEditing]);
 
 
     return (
@@ -19,33 +19,33 @@ const MessageActions = props => {
                 <button
                     className="post__send"
                     onClick={handleUpdate}>
-                    <i class="fas fa-paper-plane"></i> Envoyer
+                    <i className="fas fa-paper-plane"></i> Envoyer
                 </button>
             }
             {
-                (userId == authorId) &&
+                (userId === authorId) &&
                 <button
                     className="post__edit"
                     onClick={() => setIsEditing(!editionModal)}>
                     {editionModal ?
                         <>
-                            <i class="fas fa-undo"></i> Annuler
+                            <i className="fas fa-undo"></i> Annuler
                         </> :
                         <>
-                            <i class="fas fa-edit"></i> Modifier
+                            <i className="fas fa-edit"></i> Modifier
                         </>
                     }
                 </button>
             }
             {
-                (userId == authorId || userRole == 'admin') &&
+                (userId === authorId || userRole === 'admin') &&
                 <button
                     className="post__delete"
                     onClick={() => {
                         if (window.confirm('Voulez-vous vraiment supprimer ce message ?'))
                             removeSelf(messageId);
                     }}>
-                    <i class="fas fa-trash-alt"></i> Supprimer
+                    <i className="fas fa-trash-alt"></i> Supprimer
                 </button>
             }
         </div>

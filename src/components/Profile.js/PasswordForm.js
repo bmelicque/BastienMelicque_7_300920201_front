@@ -6,7 +6,6 @@ import { updatePassword } from '../../utils/axiosServices';
 const PasswordForm = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [newPasswordStrength, setNewPasswordStrength] = useState(0);
     const [repeatPassword, setRepeatPassword] = useState('');
     const [newPasswordIsOk, setNewPasswordIsOk] = useState(false);
     const [ResultMessage, setResultMessage] = useState(null);
@@ -26,7 +25,6 @@ const PasswordForm = () => {
     }
 
     useEffect(() => {
-        setNewPasswordStrength(zxcvbn(newPassword).score);
         setNewPasswordIsOk(zxcvbn(newPassword).score > 2 && newPassword === repeatPassword);
     }, [newPassword, repeatPassword]);
 
@@ -60,7 +58,7 @@ const PasswordForm = () => {
                 value={repeatPassword} />
 
             <button type="submit" className="btn btn--centered" disabled={!newPasswordIsOk} >
-                <i class="fas fa-paper-plane"></i> Envoyer
+                <i className="fas fa-paper-plane"></i> Envoyer
             </button>
         </form>
     );

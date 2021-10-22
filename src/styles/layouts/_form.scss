@@ -1,5 +1,6 @@
 .form {
     //box-shadow: $shadow;
+    box-sizing: border-box;
     padding: 1rem;
     border-radius: 0.5rem;
     display: flex;
@@ -17,6 +18,12 @@
         padding: 0;
         flex-direction: row;
         align-self: stretch;
+    }
+
+    &--auth {
+        gap: 0;
+        width: 90%;
+        max-width: 480px;
     }
 
     &__title {

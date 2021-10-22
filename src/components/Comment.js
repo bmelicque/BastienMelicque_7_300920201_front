@@ -7,7 +7,7 @@ import MessageActions from './MessageActions';
 const Comment = props => {
     const { comment, author, removeComment } = props;
     const userId = +getCookie("userId");
-    const username = userId == author.id ? 'moi' : author.email.split('@')[0];
+    const username = userId === author.id ? 'moi' : author.email.split('@')[0];
 
     const [isEditing, setIsEditing] = useState(false);
     const [modifiedText, setModifiedText] = useState(comment.text)
@@ -16,7 +16,7 @@ const Comment = props => {
     useEffect(() => {
         if (!isEditing)
             setModifiedText(text);
-    }, [isEditing])
+    }, [isEditing, text])
 
     // Updates the comment on the database
     const handleUpdate = async () => {
@@ -37,8 +37,8 @@ const Comment = props => {
                 <textarea
                     name="" id=""
                     className="message__text message__text--comment message__text--edit"
-                    onChange={e => setModifiedText(e.target.value)}>
-                    {modifiedText}
+                    onChange={e => setModifiedText(e.target.value)}
+                    value={modifiedText}>
                 </textarea>
             }
 

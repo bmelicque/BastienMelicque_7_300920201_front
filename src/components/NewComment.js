@@ -21,7 +21,7 @@ const NewComment = props => {
                 value={text}>
             </textarea>
             <button type="submit" className="btn btn--red" disabled={!text}>
-                <i class="fas fa-paper-plane"></i> Envoyer
+                <i className="fas fa-paper-plane"></i> Envoyer
             </button>
         </form>
     );

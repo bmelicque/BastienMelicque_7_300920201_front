@@ -24,7 +24,9 @@ const NewPost = props => {
 
             <h1
                 className="form__title" >
-                Quoi de neuf ?
+                <label htmlFor="new-post">
+                    Quoi de neuf ?
+                </label>
             </h1>
 
             <textarea name="new-post" id="new-post"
@@ -43,13 +45,13 @@ const NewPost = props => {
                             setPreviewPicture(null);
                             setFile(null);
                         }} >
-                        <i class="fas fa-trash-alt"></i> Supprimer l'image
+                        <i className="fas fa-trash-alt"></i> Supprimer l'image
                     </button>
                     : <>
                         <label htmlFor="file"
                             className="btn"
-                            tabindex="0" >
-                            <i class="fas fa-paperclip"></i>  Joindre une image
+                            tabIndex="0" >
+                            <i className="fas fa-paperclip"></i>  Joindre une image
                         </label>
                         <input type="file"
                             name="file"
@@ -61,7 +63,7 @@ const NewPost = props => {
                 }
 
                 <button type="submit" className="btn btn--red" disabled={!text}>
-                    <i class="fas fa-paper-plane"></i>  Envoyer
+                    <i className="fas fa-paper-plane"></i>  Envoyer
                 </button>
             </div>
         </form>

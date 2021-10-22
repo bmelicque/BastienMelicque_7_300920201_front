@@ -6,7 +6,7 @@ const MessageInfo = props => {
     const userId = +getCookie("userId");
 
     // Formats username and date of the post
-    const username = userId == author.id ? 'moi' : author.email.split('@')[0];
+    const username = userId === author.id ? 'moi' : author.email.split('@')[0];
     const formatedDate = formatDate(date);
 
     return (

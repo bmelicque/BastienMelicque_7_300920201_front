@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { deleteAccount } from '../../utils/axiosServices';
+import { getCookie } from '../../utils/functions';
 
 const DeleteAccountForm = props => {
     const { handleLogout } = props;
     const [password, setPassword] = useState('');
     const [resultMessage, setResultMessage] = useState(null);
+    const userRole = getCookie('role');
 
     const handleSubmit = async e => {
         try {
@@ -21,23 +23,33 @@ const DeleteAccountForm = props => {
 
     return (
         <form action=""
-            className="delete-account"
+            className="form"
             onSubmit={e => handleSubmit(e)} >
 
             <h2>Supprimer votre compte</h2>
 
-            <p>Attention ! Cette opération est définitive !</p>
+            {userRole === 'admin' ?
+                <p><strong>Ceci est un compte administrateur. Pour des raisons de sécurité, vous ne pouvez pas le supprimer.</strong></p> :
+                <>
+                    <p><strong>Attention ! Cette opération est définitive !</strong></p>
 
-            <label htmlFor="password">Mot de passe&nbsp;:</label>
-            <input type="password"
-                name="password" id="password"
-                onChange={e => setPassword(e.target.value)}
-                value={password} />
-            <br />
+                    <label htmlFor="password">Mot de passe&nbsp;:</label>
+                    <input type="password"
+                        name="password" id="password"
+                        onChange={e => setPassword(e.target.value)}
+                        value={password} />
 
-            <p>{resultMessage}</p>
+                    {resultMessage ?
+                        <p>{resultMessage}</p>
+                        : null
+                    }
 
-            <button type="submit">Supprimer</button>
+                    <button type="submit"
+                        className="btn btn--red btn--centered"
+                        disabled={!password} >
+                        <i class="fas fa-times"></i> Supprimer le compte
+                    </button>
+                </>}
         </form>
     );
 };

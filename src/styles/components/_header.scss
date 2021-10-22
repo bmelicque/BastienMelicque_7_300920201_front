@@ -3,6 +3,7 @@
     max-width: 991px;
     display: flex;
     justify-content: space-between;
+    background-color: white;
     //align-items: center;
     position: fixed;
     left: 50%;
@@ -44,6 +45,8 @@
         justify-content: center;
         gap: 0.5rem;
         color: $grey;
+        font-size: 1.1rem;
+        font-weight: bold;
 
         &--active {
             color: $color-primary;

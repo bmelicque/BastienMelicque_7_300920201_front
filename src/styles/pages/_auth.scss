@@ -1,9 +1,30 @@
 .auth {
-    max-width: 767px;
-    margin: auto;
+    width: 100vw;
     height: 100vh;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    background-color: white;
+
+    &__logo {
+        width: 20rem;
+        position: absolute;
+        top: 0;
+        z-index: 0;
+    }
+
+    .form {
+        margin-top: 15rem;
+        z-index: 0;
+    }
+
+    &__change-link {
+        color: $color-primary;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }

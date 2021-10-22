@@ -19,7 +19,7 @@ const Post = props => {
     // On load, fetches comments
     useEffect(async () => {
         setCommentList(await getComments(id));
-    }, []);
+    }, [id]);
 
     // Updates the post on the database
     const handleUpdate = async () => {
@@ -38,8 +38,8 @@ const Post = props => {
                 : <textarea
                     name="" id=""
                     className="message__text message__text--edit"
-                    onChange={e => setModifiedText(e.target.value)}>
-                    {modifiedText}
+                    onChange={e => setModifiedText(e.target.value)}
+                    value={modifiedText}>
                 </textarea>
             }
             {mediaUrl &&
@@ -53,7 +53,7 @@ const Post = props => {
             <div className="message__footer">
                 <div>
                     <button className="message__comment-list" onClick={() => setCommentsModal(!commentsModal)}>
-                        <i class="far fa-comment-alt"></i> {commentList.length}
+                        <i className="far fa-comment-alt"></i> {commentList.length}
                     </button>
                     <LikeButton
                         postId={id}

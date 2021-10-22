@@ -6,11 +6,11 @@ import { signup } from '../utils/axiosServices';
 const Signup = props => {
     const { handleLogin } = props;
     const [email, setEmail] = useState('');
-    const [emailIsOk, setEmailIsOk] = useState(false);
+    const [emailIsOk, setEmailIsOk] = useState(null);
     const [password, setPassword] = useState('');
-    const [passwordIsOk, setPasswordIsOk] = useState(false);
+    const [passwordIsOk, setPasswordIsOk] = useState(null);
     const [passwordRepeat, setPasswordRepeat] = useState('');
-    const [passwordRepeatIsOk, setPasswordRepeatIsOk] = useState(false);
+    const [passwordRepeatIsOk, setPasswordRepeatIsOk] = useState(null);
 
     useEffect(() => {
         setEmailIsOk(isEmail(email))
@@ -18,7 +18,7 @@ const Signup = props => {
 
     useEffect(() => {
         setPasswordIsOk(zxcvbn(password, email).score > 1);
-    }, [password]);
+    }, [password, email]);
 
     useEffect(() => {
         setPasswordRepeatIsOk(password === passwordRepeat);
@@ -33,7 +33,7 @@ const Signup = props => {
     }
 
     return (
-        <form action="" className="form" id="signup-form" onSubmit={handleSignUp}>
+        <form action="" className="form form--auth" id="signup-form" onSubmit={handleSignUp}>
             <label htmlFor="email">Email&nbsp;:</label>
             <input
                 type="text"
@@ -68,12 +68,16 @@ const Signup = props => {
                 onChange={e => setPasswordRepeat(e.target.value)}
                 value={passwordRepeat}
             />
-            {passwordRepeatIsOk !== false ?
-                <><br /><br /></> :
+            {passwordRepeatIsOk === false ?
                 <p className="error">Ce mot de passe n'est pas identique au précédent</p>
+                : <><br /><br /></>
             }
 
-            <button type="submit" disabled={!passwordIsOk || !emailIsOk || !passwordRepeatIsOk}>S'inscrire</button>
+            <button type="submit"
+                className="btn btn--red btn--centered"
+                disabled={!passwordIsOk || !emailIsOk || !passwordRepeatIsOk}>
+                S'inscrire
+            </button>
         </form>
     );
 };

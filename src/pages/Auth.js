@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
+import { ReactComponent as Logo } from "../assets/icon-above-font.svg";
 
 const Auth = props => {
     const { handleLogin } = props;
@@ -8,6 +9,7 @@ const Auth = props => {
 
     return (
         <div className="auth">
+            <Logo className="auth__logo" />
             {signUpModal ?
                 <Signup handleLogin={handleLogin} /> :
                 <Login handleLogin={handleLogin} />}

@@ -1,5 +1,6 @@
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -11,6 +12,10 @@ body {
 ul {
     list-style-type: none;
     padding-left: 0;
+}
+
+h2 {
+    margin-bottom: 0;
 }
 
 textarea {
