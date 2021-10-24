@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react/cjs/react.development';
 import Header from '../components/Header';
-import Profile from '../components/Profile.js';
-import Thread from '../components/Thread';
+import Profile from '../components/Profile';
+import Thread from '../components/Thread/Thread';
 
 const Home = props => {
     const [profileModal, setProfileModal] = useState(false)

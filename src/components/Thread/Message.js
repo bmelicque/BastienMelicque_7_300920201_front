@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import LikeButton from '../LikeButton';
-import Thread from '../Thread';
-import MessageInfo from '../MessageInfo';
-import MessageActions from '../MessageActions';
+import LikeButton from './LikeButton';
+import Thread from './Thread';
+import MessageInfo from './MessageInfo';
+import MessageActions from './MessageActions';
 import { getComments, editPost, editComment } from '../../utils/axiosServices';
 import { getCookie } from '../../utils/functions';
 

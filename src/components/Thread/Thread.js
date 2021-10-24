@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Message from './Message/index.js';
-import { getUsersList, deletePost, deleteComment, createPost, createComment } from '../utils/axiosServices';
+import Message from './Message.js';
+import { getUsersList, deletePost, deleteComment, createPost, createComment } from '../../utils/axiosServices';
 import NewMessage from './NewMessage.js';
 
 const Thread = props => {

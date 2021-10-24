@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react/cjs/react.development';
-import { likePost } from '../utils/axiosServices';
-import { getCookie } from '../utils/functions';
+import { likePost } from '../../utils/axiosServices';
+import { getCookie } from '../../utils/functions';
 
 const LikeButton = props => {
     const { postId } = props;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCookie, formatDate } from '../utils/functions';
+import { getCookie, formatDate } from '../../utils/functions';
 
 const MessageInfo = props => {
     const { author, date } = props;

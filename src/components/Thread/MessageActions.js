@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import { getCookie } from '../utils/functions';
+import { getCookie } from '../../utils/functions';
 
 const MessageActions = props => {
     const { messageId, authorId, handleUpdate, isEditing, setIsEditing, removeSelf } = props;
