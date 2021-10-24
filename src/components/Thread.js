@@ -40,7 +40,7 @@ const Thread = props => {
 
 
     return (!!users.length &&
-        <div className={`${contentType === "comment" ? "comment-" : ""}thread`}>
+        <div className={`thread thread--${contentType}`}>
             <NewMessage
                 parentId={parentId}
                 messageType={contentType}

@@ -15,9 +15,8 @@ exports.signup = async (email, password) => {
                 password
             }
         });
-        return 0;
     } catch (error) {
-        return error;
+        throw error.response.data.message;
     }
 }
 
@@ -35,7 +34,7 @@ exports.login = async (email, password) => {
         document.cookie = `role=${userRole}; max-age=${maxAge}`;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data.message);
         return error.response.data.message
     }
 }

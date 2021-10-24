@@ -27,9 +27,19 @@ const Signup = props => {
     const handleSignUp = async e => {
         e.preventDefault();
 
-        // If no error on signup, the user is logged in
-        if (!(await signup(email, password)))
+        try {
+            await signup(email, password);
             await handleLogin(email, password);
+        } catch (error) {
+            if (error.includes('email')) {
+                await setEmailIsOk(false);
+                document.getElementById("email-error").innerHTML = error;
+            }
+            if (error.includes("passe")) {
+                await setPasswordIsOk(false);
+                document.getElementById("password-error").innerHTML = error;
+            }
+        }
     }
 
     return (
@@ -44,7 +54,7 @@ const Signup = props => {
             />
             {emailIsOk !== false ?
                 <><br /><br /></> :
-                <p className="error">Veuillez saisir une adresse email valide</p>
+                <p className="error" id="email-error">Veuillez saisir une adresse email valide</p>
             }
 
             <label htmlFor="password">Mot de passe&nbsp;:</label>
@@ -57,7 +67,7 @@ const Signup = props => {
             />
             {passwordIsOk !== false ?
                 <><br /><br /></> :
-                <p className="error">Ce mot de passe est trop faible</p>
+                <p className="error" id="password-error">Ce mot de passe est trop faible</p>
             }
 
             <label htmlFor="passwordRepeat">Réécrire le mot de passe&nbsp;:</label>

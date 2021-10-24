@@ -47,7 +47,7 @@ const DeleteAccountForm = props => {
                     <button type="submit"
                         className="btn btn--red btn--centered"
                         disabled={!password} >
-                        <i class="fas fa-times"></i> Supprimer le compte
+                        <i className="fas fa-times"></i> Supprimer le compte
                     </button>
                 </>}
         </form>

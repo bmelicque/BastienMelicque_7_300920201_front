@@ -35,10 +35,6 @@ const PasswordForm = () => {
 
             <h2>Modifier votre mot de passe</h2>
 
-            {!!ResultMessage &&
-                <p>{ResultMessage}</p>
-            }
-
             <label htmlFor="current">Mot de passe actuel&nbsp;:</label>
             <input type="password"
                 name="current" id="current"
@@ -57,9 +53,13 @@ const PasswordForm = () => {
                 onChange={e => setRepeatPassword(e.target.value)}
                 value={repeatPassword} />
 
-            <button type="submit" className="btn btn--centered" disabled={!newPasswordIsOk} >
+            <button type="submit" className="btn btn--red btn--centered" disabled={!newPasswordIsOk} >
                 <i className="fas fa-paper-plane"></i> Envoyer
             </button>
+
+            {!!ResultMessage &&
+                <p className="result-message">{ResultMessage}</p>
+            }
         </form>
     );
 };

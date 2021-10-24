@@ -30,9 +30,13 @@ function App() {
 	}
 
 	useEffect(async () => {
-		const posts = await getPosts();
-		setData(posts);
-		if (posts.length) setIsLogged(true);
+		try {
+			const posts = await getPosts();
+			setData(posts);
+			if (posts.length) setIsLogged(true);
+		} catch (error) {
+			console.log(error);
+		}
 	}, []);
 
 	return (
