@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import { getPosts, login } from "./utils/axiosServices";
@@ -10,15 +9,14 @@ function App() {
 	const [isLogged, setIsLogged] = useState(undefined);
 
 	const handleLogin = async (email, password) => {
-		const error = await login(email, password) || null;
-
-		if (!error) {
+		try {
+			await login(email, password);
 			const posts = await getPosts();
 			await setIsLogged(true);
 			await setData(posts);
+		} catch (error) {
+			return error
 		}
-
-		return error;
 	}
 
 	const handleLogout = () => {

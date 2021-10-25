@@ -5,7 +5,7 @@ const token = getCookie('token');
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 // Handles signup
-exports.signup = async (email, password) => {
+export async function signup(email, password) {
     try {
         await axios({
             method: "post",
@@ -21,7 +21,7 @@ exports.signup = async (email, password) => {
 }
 
 // Handles login
-exports.login = async (email, password) => {
+export async function login(email, password) {
     try {
         const res = await axios.post(
             `${process.env.REACT_APP_API_URL}api/auth/login`,
@@ -34,13 +34,12 @@ exports.login = async (email, password) => {
         document.cookie = `role=${userRole}; max-age=${maxAge}`;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-        console.log(error.response.data.message);
-        return error.response.data.message
+        throw error.response.data.message
     }
 }
 
 // Gets the list of all users
-exports.getUsersList = async () => {
+export async function getUsersList() {
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}api/user`);
         return [...res.data.users];
@@ -50,7 +49,7 @@ exports.getUsersList = async () => {
     }
 }
 
-exports.updatePassword = async (password, newPassword) => {
+export async function updatePassword(password, newPassword) {
     try {
         await axios.put(
             `${process.env.REACT_APP_API_URL}api/user`,
@@ -62,7 +61,7 @@ exports.updatePassword = async (password, newPassword) => {
     }
 }
 
-exports.deleteAccount = async password => {
+export async function deleteAccount(password) {
     try {
         await axios.delete(
             `${process.env.REACT_APP_API_URL}api/user`,
@@ -74,7 +73,7 @@ exports.deleteAccount = async password => {
 }
 
 // Creates a new post and sends it to the database
-exports.createPost = async (text, file = null) => {
+export async function createPost(text, file = null) {
     try {
         const data = new FormData();
         data.append('text', text);
@@ -92,18 +91,18 @@ exports.createPost = async (text, file = null) => {
 }
 
 // Goes fetch all posts
-exports.getPosts = async () => {
+export async function getPosts() {
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}api/post`);
         return [...res.data.posts];
     } catch (error) {
         console.log(error);
-        return [];
+        throw error.response.data.message;
     }
 }
 
 // Handles likes and dislikes
-exports.likePost = async (postId, like) => {
+export async function likePost(postId, like) {
     try {
         await axios.post(
             `${process.env.REACT_APP_API_URL}api/post/${postId}/like`,
@@ -115,7 +114,7 @@ exports.likePost = async (postId, like) => {
 }
 
 // Handles modifications of a post
-exports.editPost = async (postId, text) => {
+export async function editPost(postId, text) {
     try {
         await axios.put(
             `${process.env.REACT_APP_API_URL}api/post/${postId}`,
@@ -128,7 +127,7 @@ exports.editPost = async (postId, text) => {
 }
 
 // Handles deletion of a post
-exports.deletePost = async (postId) => {
+export async function deletePost(postId) {
     try {
         await axios.delete(`${process.env.REACT_APP_API_URL}api/post/${postId}`)
         return 0;
@@ -138,7 +137,7 @@ exports.deletePost = async (postId) => {
 }
 
 // Creates a new post and sends it to the database
-exports.createComment = async (postId, text) => {
+export async function createComment(postId, text) {
     try {
         const res = await axios.post(
             `${process.env.REACT_APP_API_URL}api/comment/${postId}`,
@@ -152,7 +151,7 @@ exports.createComment = async (postId, text) => {
 }
 
 // Gets all the comments of a post
-exports.getComments = async (postId) => {
+export async function getComments(postId) {
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}api/comment/${postId}`);
         return [...res.data.comments];
@@ -163,7 +162,7 @@ exports.getComments = async (postId) => {
 }
 
 // Handles modifications of a comment
-exports.editComment = async (commentId, text) => {
+export async function editComment(commentId, text) {
     try {
         await axios.put(
             `${process.env.REACT_APP_API_URL}api/comment/${commentId}`,
@@ -176,7 +175,7 @@ exports.editComment = async (commentId, text) => {
 }
 
 // Handles deletion of a comment
-exports.deleteComment = async (commentId) => {
+export async function deleteComment(commentId) {
     try {
         await axios.delete(`${process.env.REACT_APP_API_URL}api/comment/${commentId}`)
         return 0;

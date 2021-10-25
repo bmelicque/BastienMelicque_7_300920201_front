@@ -1,5 +1,5 @@
 // Takes a timestamp and returns a formated date
-exports.formatDate = (timestamp) => {
+export function formatDate(timestamp) {
     const fullDate = new Date(timestamp);
     const now = new Date(Date.now());
     const elapsedDays = Math.abs(Math.floor(Date.now()/86400000) - Math.floor(Date.parse(timestamp)/86400000));
@@ -39,7 +39,7 @@ exports.formatDate = (timestamp) => {
 }
 
 // Parses cookies to get the wanted one
-exports.getCookie = (cookieName) => {
+export function getCookie(cookieName) {
     const cookieList = document.cookie.split('; ')
         .reduce((acc, cur) => {
             acc[cur.split('=')[0]] = cur.split('=')[1];

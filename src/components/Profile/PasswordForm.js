@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useState, useEffect } from 'react';
 import zxcvbn from 'zxcvbn';
 import { updatePassword } from '../../utils/axiosServices';
 

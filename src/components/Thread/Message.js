@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import LikeButton from './LikeButton';
 import Thread from './Thread';
 import MessageInfo from './MessageInfo';
