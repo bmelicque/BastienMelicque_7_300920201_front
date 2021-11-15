@@ -11,4 +11,4 @@ Le projet vise à évaluer les compétences suivantes :
 Ce repo contient le code de l'application côté backend.
 
 L'application frontend est disponible ici :
-`https://github.com/bmelicque/BastienMelicque_7_300920201_back.git`
+`https://github.com/bmelicque/BastienMelicque_7_30092021_back.git`
